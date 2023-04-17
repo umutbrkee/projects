@@ -1,0 +1,3 @@
+I have developed a project similar to the mobile racing game "Hadi" without a UI. The project involves bot players that answer random questions and compete against the user as if they were real players. The players try to answer each question correctly to win the race, and those who answer incorrectly are eliminated while the remaining players continue to compete with the next set of questions. The total prize pool is divided equally among the winning players.
+
+In addition to the game itself, we have also developed an admin portal within the project. Through this portal, users can add, modify, and edit questions and answers. They can also adjust the number of players and prize amount.
