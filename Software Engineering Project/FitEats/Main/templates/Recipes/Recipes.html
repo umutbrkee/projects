@@ -1,0 +1,203 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+    <style type="text/css">
+            body {
+        margin: 0;
+        padding: 0;
+    }
+
+    button {
+        display: inline-block;
+        margin: 5px 5px 0 0;
+        padding: 10px 30px;
+        outline: 0;
+        border: 0;
+        cursor: pointer;
+        background: #5185a8;
+        color: #fff;
+        text-decoration: none;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+        font-weight: 100;
+    }
+
+    input {
+        width: 100%;
+        margin: 0 0 5px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 0;
+        font-family: arial, verdana, sans-serif;
+        font-size: 14px;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+    }
+
+    .mbsc-page {
+        padding: 1em;
+    }
+
+    </style>
+
+
+<div class="spectrum-background">
+    <div class="row col-12">
+        <div class="input-container col-12 mx-2">
+            <div>
+                <header>
+                    <h1 class="header">Fit Eats</h1>
+                </header>
+                
+
+                <form action="{% url 'Main:RecipesUrl' %}" method="post">
+                  {% csrf_token %}
+                <div mbsc-page class="demo-multiple-select">
+                  <label style="font-size: 20px;">Choose your Ingredients from this list:</label>
+                  
+                  <div style="height:100%">
+                <label>
+                  <input name="searchIngredients" mbsc-input id="demo-multiple-select1-input" placeholder="Please select..." data-dropdown="true" data-input-style="outline" data-label-style="stacked" data-tags="true" />
+                </label>
+                
+                <select id="demo-multiple-select1" multiple>
+                  {% for ingredient in ingredients %}
+                  <option>{{ ingredient }}</option>
+                  {% endfor %}
+                </select>
+                <input type="submit" class="button-18 " role="button" value="OK" name="submit-form1">
+              </form>
+                  </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="input-container col-12 mx-2">
+          <div>
+
+              <form action="{% url 'Main:RecipesUrl' %}" method="post">
+                {% csrf_token %}
+              <div mbsc-page class="demo-multiple-select">
+                <label style="font-size: 20px;">Choose your Category from this list:</label>
+                
+                <div style="height:100%">
+              <label>
+                <input name="searchCategory" mbsc-input id="demo-multiple-select2-input" placeholder="Please select..." data-dropdown="true" data-input-style="outline" data-label-style="stacked" data-tags="true" />
+              </label>
+              
+              <select id="demo-multiple-select2">
+                  <option>Köfte</option>
+                  <option>Sebze</option>
+                  <option>Et</option>
+                  <option>Hamur İşi</option>
+                  <option>Kahvaltılık</option>
+                  <option>Tatlı</option>
+                  <option>Özel Beslenme</option>
+                  <option>Kek</option>
+                  <option>Pasta</option>
+              </select>
+              <input type="submit" class="button-18 " role="button" value="OK" name="submit-form2">
+            </form>
+                </div>
+              </div>
+              
+          </div>
+      </div>
+
+        <div class="cardlistcolumn">
+
+              {% for recipe1 in recipies %}
+
+    {% if forloop.counter0|divisibleby:3 %}
+    <div class="cardlistrow">
+  {% endif %}
+
+
+
+   <div class="closed card-box" id={id}>
+    <header id="toggle"  onClick={handleClick} >
+      <div class="header1">
+        <img src="{{recipe1.Image}}" />
+      </div>
+      <div style='display: flex; flex-direction: row; justify-content: space-between; margin-top: -240px'>
+        <div class="icons-div icon-div-right">
+          <p style='font-size:12px;  margin-bottom: 0; font-weight: bold; margin-bottom: 5px;'>{{ recipe1.People }}</p>
+        </div>
+        <div class="icons-div icon-div-left">
+          <p style='font-size:15px; margin-bottom: 0; font-weight: bold; margin-top: 3px; margin-left: 15px;'>{{ recipe1.Time }}</p>
+        </div>
+      </div>
+        
+          <div id="card-box-name" class="title">{{ recipe1.Name }}</div>
+          
+          <form action="{% url 'Main:FullRecipeUrl' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="name" value="{{ recipe1.Name }}">
+            <input type="hidden" name="ingridients" value="{{ recipe1.Ingridients }}">
+            <input type="hidden" name="details" value="{{ recipe1.RecipeDetails }}">
+            <input type="hidden" name="image" value="{{ recipe1.Image }}">
+            <input type="submit" value="Tarifi Gör" id="card-box-button" style='width: 100%; background-color: black; border-color:black; color:white; cursor:pointer;'>
+        </form>
+        
+    </header>
+    <article>
+      <!-- <ul class="ingredients">
+        {
+          ingredients.map(item => (
+            <li key={item}> 
+              <div class="amount">{item}</div>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="preperation"> 
+        <ul>
+          {
+            recipeDetails.map(item => (
+              <li key={item}>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div> -->
+    </article>
+  </div>
+    
+  {% if forloop.counter|divisibleby:3 %}
+</div>
+{% endif %}
+
+
+             
+                {% endfor %}
+
+            </div>
+                
+            </div>
+
+
+        </div>
+
+    </div>
+    <script>
+        
+      mobiscroll.setOptions({
+  locale: mobiscroll.localeTr,                                         // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+  theme: 'ios',                                                        // Specify theme like: theme: 'ios' or omit setting to use default
+  themeVariant: 'light'                                                // More info about themeVariant: https://docs.mobiscroll.com/5-24-1/javascript/select#opt-themeVariant
+});
+
+mobiscroll.select('#demo-multiple-select1', {
+  inputElement: document.getElementById('demo-multiple-select1-input')  // More info about inputElement: https://docs.mobiscroll.com/5-24-1/javascript/select#opt-inputElement
+});
+
+mobiscroll.select('#demo-multiple-select2', {
+  inputElement: document.getElementById('demo-multiple-select2-input')  // More info about inputElement: https://docs.mobiscroll.com/5-24-1/javascript/select#opt-inputElement
+});
+</script>
+{% endblock %}

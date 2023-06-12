@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="spectrum-background">
+        <div class="input-container col-12">
+            <h1 class="recipeheader">{{ recipeName }}</h1>
+            
+        </div>
+        <div class="input-container col-12">
+             <img src={{recipeImage}} /> <!--fotoyu çek burda -->
+        </div>
+        <div class="col-12" align="center">
+            <h2>Ingridients</h2>
+            <form id="form1" action="{% url 'Main:IngredientsUrl' %}" method="post">
+                {% csrf_token %}
+                {% for value in recipeIngridients %}
+                <h4 id="{{ value }}" onclick="h4ToInput(this.id)" style="cursor:pointer;"><a type="submit">●{{ value }}</a></h4>
+                {% endfor %}
+                <input id="input1" type="hidden" value="" name="ingredientName"/>
+                </form>
+        </div>
+        <div class="col-12" align="center">
+            <h2>Recipe Details</h2>
+            {% for value in recipeDetails %}
+            <h4>{{ value }}</h4>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function h4ToInput(id){
+            document.getElementById("input1").value = id
+            document.getElementById("form1").submit();
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <style>
+    /* Genel Stiller */
+    body {
+	    background-color: #F8F0E3;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      min-height: 100%;
+    }
+    body {
+      background:
+          linear-gradient(orange, transparent),
+          linear-gradient(to top left, rgb(170, 220, 225), transparent),
+          linear-gradient(to top right, rgb(218, 30, 190), transparent);
+      background-blend-mode: screen;
+      font-family: Arial, sans-serif;
+    }
+    nav {
+          background-color: #000000;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 10);
+          position: relative;
+          z-index: 1;
+        }
+
+        nav ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          text-align: center;
+          display: flex;
+          justify-content: space-around;
+        }
+
+        nav ul li {
+          flex: 1;
+          margin: 10px;
+        }
+
+        nav ul li a {
+          display: block;
+          padding: 10px;
+          text-decoration: none;
+          color: #fff;
+          font-weight: bold;
+          transition: color 0.3s ease;
+          text-align: center;
+          border-radius: 10px;
+          border: 2px solid #000;
+          background-color: #000;
+        }
+
+        nav ul li a:hover {
+          color: #ff6f00;
+          background-color: #FFF;
+        }
+        nav ul li.active a {
+          transform: scale(1.1);
+          background-color: #fff;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    /* Content Stili */
+    .container {
+      max-width: 800px;
+      margin: 10px auto;
+      padding: 15px;
+      background-color: #F8F0E3;;
+      box-shadow: 0 10px 4px rgba(0, 0, 0, 0);
+    }
+
+    /* Footer Stili */
+    footer {
+      background-color: #FFDAB9;
+      padding: 20px;
+      text-align: center;
+      color: #000;
+    }
+    .spectrum-background {
+        background:
+            linear-gradient(orange, transparent),
+            linear-gradient(to top left, rgb(170, 220, 225), transparent),
+            linear-gradient(to top right, rgb(218, 30, 190), transparent);
+        background-blend-mode: screen;
+        
+      }
+    
+      .card {
+        border-radius: 10px;
+      }
+
+  </style>
+
+</head>
+<body class="h-100">
+<!-- Navbar -->
+<nav>
+  <ul>
+    <li class="{% if request.path == '/ingredients' %}active{% endif %}"><a href="{% url 'Main:IngredientsUrl' %}">Ingredients</a></li>
+    <li class="{% if request.path == '/recipes' %}active{% endif %}"><a href="{% url 'Main:RecipesUrl' %}">Recipes</a></li>
+    {% if request.user.is_authenticated %}
+    <li class="{% if request.path == '/profile' %}active{% endif %}"><a href="{% url 'Main:ProfileUrl' %}">Profile</a></li>
+    <li><a href="{% url 'Main:LogoutUrl' %}">Logout</a></li>
+    {% else %}
+    <li><a href="{% url 'Main:RegisterUrl' %}">Register</a></li>
+    <li><a href="{% url 'Main:LoginUrl' %}">Login</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+<div class="spectrum-background">
+    <div style="display: flex; justify-content: space-between; height: 100%;">
+      
+      <div class="card" style="background-color:limegreen; width: 25%; height: auto; margin-left: 2%;margin-top: 10%; overflow:  ">
+        <div class="card-body d-flex flex-column justify-content-between " style="overflow: auto; padding:3%;">
+          <h5 class="card-title">BMI</h5>
+          <div class="card-text">
+            <p>BMI : {{ user.bmi }}</p>
+            
+            <p>Underweight: If the BMI value is below 18.5, the individual falls into the underweight category. This indicates a lack of weight or inadequate nutrition. Being underweight can lead to health issues and low energy levels.</p>
+            <p>Normal Weight: If the BMI value is between 18.5 and 24.9, the individual falls into the normal weight category. This signifies a healthy body weight and appropriate weight distribution. Maintaining a normal weight is generally associated with a balanced and healthy lifestyle.</p>
+            <p>Overweight: If the BMI value is between 25 and 29.9, the individual falls into the overweight category. Being overweight can increase health risks and be a stepping stone towards obesity. It is important for overweight individuals to focus on weight management and adopt healthy lifestyle habits, including a balanced diet and regular physical activity.</p>
+            <p>Obese: If the BMI value is 30 or higher, the individual falls into the obese category. Obesity refers to excessive weight accumulation that can lead to serious health issues. Obese individuals should seek support for weight loss and adopting a healthy lifestyle.</p>
+    
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background-color: skyblue; width: 40%; height: 100%; margin-top:8%;">
+        <div class="card-body" style="color: white;">
+          <h1 class="card-title" style="text-align: center;">User Information</h1>
+          <div class="card-text" style="margin-top: 20px;">
+            <!-- Ad -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                <label for="nameInput" style="height: 45px; line-height: 45px; font-size: 15px; margin-left: 1%;"><strong>First Name:</strong></label>
+                <input type="text" class="form-control" id="nameInput" style="width: 300px; height: 45px; font-size: 15px; float: right;margin-right: 1%;" value="{{ user.first_name }}" readonly>
+              </div>
+            </div>
+    
+            <!-- Soyad -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                <label for="surnameInput" style="height: 45px; line-height: 45px; font-size: 15px; margin-left: 1%;"><strong>Last Name:</strong></label>
+                <input type="text" class="form-control" id="surnameInput" style="width: 300px; height: 45px; font-size: 15px; float: right;margin-right: 1%;" value="{{ user.last_name }}" readonly>
+              </div>
+            </div>
+    
+            <!-- Email Adresi -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                <label for="emailInput" style="height: 45px; line-height: 45px; font-size: 15px;margin-left: 1%;"><strong>Email:</strong></label>
+                <input type="email" class="form-control" id="emailInput" style="width: 300px; height: 45px; font-size: 15px; float: right;margin-right: 1%;" value="{{ user.email }}" readonly>
+              </div>
+            </div>
+    
+            <!-- Yaş -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                <label for="ageInput" style="height: 45px; line-height: 45px; font-size: 15px;margin-left: 1%;"><strong>Age:</strong></label>
+                <input type="text" class="form-control" id="ageInput" style="width: 300px; height: 45px; font-size: 15px; float: right;margin-right: 1%;" value="{{ user.age }}" readonly>
+              </div>
+            </div>
+            <!-- Boy -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                <label for="heightInput" style="height: 45px; line-height: 45px; font-size: 15px;margin-left: 1%;"><strong>Height:</strong></label>
+                <input type="text" class="form-control" id="heightInput" style="width: 300px; height: 45px; font-size: 15px; float: right;margin-right: 1%;" value="{{ user.height }}" readonly>
+              </div>
+            </div>
+    
+            <!-- Kilo -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                <label for="weightInput" style="height: 45px; line-height: 45px; font-size: 15px;margin-left: 1%;"><strong>Weight:</strong></label>
+                <input type="text" class="form-control" id="weightInput" style="width: 300px; height: 45px; font-size: 15px; float: right;margin-right: 1%;" value="{{ user.weight }}" readonly>
+              </div>
+            </div>
+    
+            <!-- Cinsiyet -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                  <label for="genderInput" style="height: 45px; line-height: 45px; font-size: 15px; margin-left: 1%;"><strong>Gender:</strong></label>
+                  <input type="text" class="form-control" id="genderInput" style="width: 300px; height: 45px; font-size: 15px; float: right; margin-right: 1%;" value="{% if user.gender == 'M' %}Male{% else %}Female{% endif %}" readonly>
+              </div>
+          </div>
+          
+    
+            <!-- Aktiflik Seviyesi -->
+            <div class="form-group row" style="margin-bottom: 28px;">
+              <div class="col-sm-4 text-right">
+                  <label for="aktiflikInput" style="height: 45px; line-height: 45px; font-size: 15px; margin-left: 1%;"><strong>Activity Level:</strong></label>
+                  <input type="text" class="form-control" id="aktiflikInput" style="width: 300px; height: 45px; font-size: 15px; float: right; margin-right: 1%;" value="
+                  {% if user.activity_factor == 'S' %}Sedentary{% elif user.activity_factor == 'L' %}Lightly Active{% elif user.activity_factor == 'M' %}Moderately Active{% elif user.activity_factor == 'V' %}Very Active{% elif user.activity_factor == 'E' %}Extremely Active{% endif %}" readonly>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background-color: limegreen; width: 25%; height: auto; margin-right: 2%; margin-top: 10%; border-radius: 10px; ">
+        <div class="card-body" style="overflow: auto; padding:3%;">
+            <h5 class="card-title">Daily Calorie Intake</h5>
+            <p>Calorie Intake : {{ user.tdee }}</p>
+            <div class="card-text">
+                <p>Low Calorie Intake: Range of 1500 to 1800 calories
+                    This range is generally suitable for individuals who want to lose weight or manage their weight. This low calorie intake may be below the daily energy requirements and requires careful planning.
+                </p>
+                <p>Moderate Calorie Intake: Range of 1800 to 2200 calories
+                    This range is commonly used to meet the daily energy needs of an average adult. It may be suitable for individuals who want to maintain their ideal weight or gently lose weight.
+                </p>
+                <p>High Calorie Intake: Range of 2200 to 2800 calories
+                    This range may be suitable for individuals with a more active lifestyle, who are physically active, or who want to gain weight. High calorie intake is preferred to meet energy requirements and support physical performance.
+                </p>
+                <p>Very High Calorie Intake: Range of 2800 to 3500 calories
+                    This range may be applicable to professional athletes or individuals in occupations that require intense physical activity. Very high calorie intake is preferred in situations where daily energy needs are significantly high.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+  </div>
+
+</body>
+</html>
