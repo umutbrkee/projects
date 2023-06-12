@@ -1,2 +1,2 @@
 # projects
-school projects for python
+school projects
